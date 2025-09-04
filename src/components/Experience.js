@@ -1,16 +1,16 @@
 export default function Experience() {
   const items = [
     {
-      title: 'Backend Developer Intern',
+      title: 'Backend Developer Intern (On Site)' ,
       org: 'EDUMITRAM PRIVATE LTD.',
       dates: 'Nov 2023 — Mar 2024',
-      note: 'Reduced API latency by 30% via REST optimization and schema tuning.',
+      note: 'Engineered and maintained RESTful APIs for the ‘Society’ platform, reducing response time and ensuring scalability for thousands of users, enabling scalable community services.Architected and improved relational database schemas, maintaining efficient storage and fast retrieval.Integrated backend services with frontend modules, streamlining communication across the platform.',
     },
     {
-      title: 'Full Stack Developer (Web) — Summer Internship',
+      title: 'Full Stack Developer — Summer Internship (Remote)',
       org: 'INTERNSHALA',
       dates: 'Jun 2023 — Aug 2023',
-      note: 'Built PG Life platform; PHP backend + responsive UI (HTML/CSS/JS).',
+      note: 'Developed “PG Life” web platform for PG accommodation booking.Automated backend logic in PHP and designed responsive UI using HTML, CSS, and JavaScript.Enhanced usability with dynamic PG listings, advanced filters, and mobile-friendly layouts.',
     },
   ];
 
@@ -42,7 +42,6 @@ export default function Experience() {
           ))}
         </div>
 
-        {/* RIGHT: tiny animated video (autoplay, muted, loop, inline) */}
         <div className="exp-right">
           <video
             className="exp-video"

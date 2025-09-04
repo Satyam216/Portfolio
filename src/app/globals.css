@@ -261,7 +261,7 @@ textarea.input{ min-height:140px; resize:vertical; }
 }
 
 /* Section top compact so heading upper-center दिखे */
-.exp-section{ min-height: auto; padding-top: 68px; padding-bottom: 48px; } /* navbar offset के अनुसार adjust करें */
+.exp-section{ min-height: auto; padding: 50 px; } /* navbar offset के अनुसार adjust करें */
 
 /* Centered heading with lines */
 .exp-headline{
@@ -332,6 +332,7 @@ textarea.input{ min-height:140px; resize:vertical; }
 }
 
 #experience .container{margin-bottom: 20px; width:100%; max-width:1200px; margin-inline:auto;  padding-inline: 14px; }
+#experience section{ position:relative; min-height:60vh; display:grid; place-items:center; padding:40px 22px 50px; }
 
 /* Responsive: stack; image below */
 @media (max-width: 980px){
