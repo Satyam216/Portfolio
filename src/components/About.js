@@ -1,3 +1,4 @@
+import Image from "next/image";
 export default function About() {
   const aboutText = `
   I am a passionate Full Stack Developer and current MCA student at VIT Bhopal, with a strong foundation in building real-time, 
@@ -12,10 +13,10 @@ export default function About() {
   `.trim();
 
   return (
-    <div className="container about-plain reveal">
+    <div className="container about-plain reveal">  
       
       <div className="about-photo">
-        <img src="/images/Profile.jpg" alt="Satyam Jain" />
+        <Image src="/images/Profile.jpg" alt="Satyam Jain" />
       </div>
 
       <div className="about-content">

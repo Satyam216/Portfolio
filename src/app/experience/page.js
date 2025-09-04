@@ -1,5 +1,4 @@
-import AnimatedBackground from "../../components/AnimatedBackground"
-import Projects from "../../components/Experience"
+import Experience from "../../components/Experience"
 
 export default function ExperiencePage() {
   return (
