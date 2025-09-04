@@ -8,6 +8,7 @@ import About from '../components/About';
 import Projects from '../components/Projects';
 import Skills from '../components/Skills';
 import Contact from '../components/Contact';
+import Experience from '../components/Experience';
 
 export default function Page() {
   useEffect(()=>{
@@ -50,6 +51,14 @@ export default function Page() {
         <About />
       </section>
 
+      {/* Experience */}
+      <section id="experience">
+        <div className="bg"/>
+        <div className="overlay" />
+        <Experience />
+      </section>
+
+
       {/* Projects */}
       <section id="projects">
         <div className="bg" style={{backgroundImage:'url(/images/freepik__adjust__9251.jpeg)'}} />
@@ -59,7 +68,7 @@ export default function Page() {
 
       {/* Skills */}
       <section id="skills">
-        <div className="bg" style={{backgroundImage:'url(/images/5072612.jpg)'}} />
+        <div className="bg" />
         <div className="overlay" />
         <Skills />
       </section>

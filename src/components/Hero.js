@@ -65,7 +65,16 @@ export default function Hero() {
 {`const coder = {
   name: 'Satyam Jain',
   roles: ['Full‑Stack', 'Backend'],
-  skills: ['React', 'Next.js', 'Node', 'Express', 'TS', 'MongoDB', 'PostgreSQL'],
+  skills: 
+  programming: ['C', 'C++', 'Java', 'Python'],
+  web: ['HTML', 'CSS', 'JavaScript', 'PHP'],
+  frameworks: ['React.js', 'Next.js','React Native', 'Tailwind CSS', 'WebSocket'],
+  databases: ['MySQL', 'MongoDB', 'PostgreSQL'],
+  tools: ['GitHub','Firebase','Supabase', 'AWS', 'Vercel', 'Postman', 'JWT'],
+  highlight() {
+    return [
+      'Clean Code', 'API Design', 'Auth', 'Testing'
+    ],
   strengths: ['Clean Code', 'API Design', 'Auth', 'Testing'],
   currently: 'Building fast UIs & reliable APIs',
 };`}
