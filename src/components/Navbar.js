@@ -39,7 +39,7 @@ export default function Navbar() {
     <header className="navbar">
       <div className={`nav-inner nav ${open ? 'open' : ''}`}>
         {/* Logo text bigger, Next.js badge removed */}
-        <div className="logo" style={{ fontSize: '2.0rem', fontWeight: 700, letterSpacing: '0.6px' }}>
+        <div style={{ fontSize: '2.0rem', fontWeight: 700, letterSpacing: '0.6px' }}>
           Satyam Jain
         </div>
 
