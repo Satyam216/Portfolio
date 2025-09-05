@@ -9,6 +9,8 @@ import Projects from '../components/Projects';
 import Skills from '../components/Skills';
 import Contact from '../components/Contact';
 import Experience from '../components/Experience';
+import Education from '@/components/Education';
+import Footer from '../components/Footer';
 
 export default function Page() {
   useEffect(()=>{
@@ -73,12 +75,23 @@ export default function Page() {
         <Skills />
       </section>
 
+      {/* Education */}
+      <section id="education">
+        <div className="bg" style={{backgroundImage:'url(/images/Education-bg.jpg)'}} />
+        <div className="overlay" />
+        <Education />
+      </section>
+
+
       {/* Contact */}
       <section id="contact">
         <div className="bg" style={{backgroundImage:'url(/images/contact-bg.jpg)'}} />
         <div className="overlay" />
         <Contact />
       </section>
+
+      {/* Footer */}
+      <Footer/>
     </>
   );
 }

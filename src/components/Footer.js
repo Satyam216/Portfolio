@@ -1,29 +1,39 @@
-"use client"
-import { motion } from "framer-motion"
-import Link from "next/link"
+'use client';
+import Link from 'next/link';
+import { Github, Linkedin, Instagram, Twitter, Code2 } from 'lucide-react'; // Code2 used for LeetCode
 
 export default function Footer() {
+  const socials = [
+    { href: 'https://www.linkedin.com/in/satyam-jain-874b66143', label: 'LinkedIn', Icon: Linkedin },
+    { href: 'https://github.com/Satyam216', label: 'GitHub', Icon: Github },
+    { href: 'https://www.instagram.com/saty_satyam21/', label: 'Instagram', Icon: Instagram },
+    { href: 'https://x.com/jainSatyam_216', label: 'Twitter (X)', Icon: Twitter },
+    { href: 'https://leetcode.com/u/satyam_2106/', label: 'LeetCode', Icon: Code2 },
+  ];
+
   return (
-    <motion.footer 
-      className="mt-12 py-6 border-t border-gray-700 text-center text-gray-400"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.6 }}
-    >
-      <div className="flex justify-center gap-6 mb-4">
-        <Link href="https://github.com/yourusername" target="_blank" className="hover:text-white transition">
-          GitHub
-        </Link>
-        <Link href="https://linkedin.com/in/yourusername" target="_blank" className="hover:text-white transition">
-          LinkedIn
-        </Link>
-        <Link href="mailto:yourmail@example.com" className="hover:text-white transition">
-          Email
-        </Link>
+    <footer className="site-footer">
+      <div className="container foot-wrap">
+        <div className="foot-brand">
+          <span className="foot-title">Let’s connect</span>
+          <p className="foot-sub">Open to collaboration and opportunities.</p>
+        </div>
+
+        <nav className="foot-social">
+          {socials.map(({ href, label, Icon }) => (
+            <Link key={label} href={href} target="_blank" rel="noreferrer" aria-label={label} className="s-link">
+              <span className="s-ico">
+                <Icon size={20} strokeWidth={1.8} />
+              </span>
+              <span className="s-text">{label}</span>
+            </Link>
+          ))}
+        </nav>
       </div>
-      <p className="text-sm">
-        © {new Date().getFullYear()} Your Name. All rights reserved.
-      </p>
-    </motion.footer>
-  )
+
+      <div className="foot-copy">
+        <p>© 2025 Satyam Jain • All rights reserved</p>
+      </div>
+    </footer>
+  );
 }
