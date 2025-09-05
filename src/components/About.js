@@ -16,7 +16,7 @@ export default function About() {
     <div className="container about-plain reveal">  
       
       <div className="about-photo">
-        <Image src="/images/Profile.jpg" alt="Satyam Jain" />
+        <Image src="/images/Profile.jpg" alt="Satyam Jain" width={200} height={200}/>
       </div>
 
       <div className="about-content">

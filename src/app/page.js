@@ -61,7 +61,7 @@ export default function Page() {
 
       {/* Projects */}
       <section id="projects">
-        <div className="bg" style={{backgroundImage:'url(/images/freepik__adjust__9251.jpeg)'}} />
+        <div className="bg" style={{backgroundImage:'url(/images/project-bg.jpg)'}} />
         <div className="overlay" />
         <Projects />
       </section>
@@ -75,7 +75,7 @@ export default function Page() {
 
       {/* Contact */}
       <section id="contact">
-        <div className="bg"/>
+        <div className="bg" style={{backgroundImage:'url(/images/contact-bg.jpg)'}} />
         <div className="overlay" />
         <Contact />
       </section>
