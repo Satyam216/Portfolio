@@ -3,9 +3,21 @@ import React from 'react';
 
 const DOMAINS = [
   {
+    key: 'programming',
+    title: 'Programming Languages',
+    icons: [
+      { alt: 'Java', src: '/icons/Java.svg' },
+      { alt: 'Javascript', src: '/icons/JavaScript.svg' },
+      { alt: 'CPP', src: '/icons/C++-(CPlusPlus).svg' },
+      { alt: 'C', src: '/icons/C.svg' },
+      { alt: 'Python', src: '/icons/Python.svg' },
+    ],
+  },
+  {
     key: 'frontend',
     title: 'Frontend',
     icons: [
+      { alt: 'HTML', src: '/icons/HTML5.svg' },
       { alt: 'React', src: '/icons/React.svg' },
       { alt: 'Next.js', src: '/icons/Next.js.svg' },
       { alt: 'TypeScript', src: '/icons/typescript.svg' },
@@ -17,9 +29,10 @@ const DOMAINS = [
     key: 'backend',
     title: 'Backend',
     icons: [
+      { alt: 'PHP', src: '/icons/PHP.svg' },
       { alt: 'Node.js', src: '/icons/Node.js.svg' },
       { alt: 'Express', src: '/icons/express.svg' },
-      { alt: 'WebSocket', src: '/icons/Websocket.svg' },
+      { alt: 'WebSocket', src: '/icons/websocket-svgrepo-com.svg' },
       { alt: 'JWT', src: '/icons/jwt.svg' },
     ],
   },
@@ -43,6 +56,7 @@ const DOMAINS = [
       { alt: 'GitHub', src: '/icons/github.svg' },
       { alt: 'Postman', src: '/icons/postman.svg' },
       { alt: 'Android Studio', src: '/icons/Android-Studio.svg' },
+      { alt: 'Canva', src: '/icons/Canva.svg' },
     ],
   },
   {
@@ -50,7 +64,14 @@ const DOMAINS = [
     title: 'Mobile & UI',
     icons: [
       { alt: 'React Native', src: '/icons/React-Native.svg' },
-      { alt: 'Figma', src: '/icons/figma.svg' },
+    ],
+  },
+  {
+    key: 'operating system',
+    title: 'Operating Systems',
+    icons: [
+      { alt: 'Windows', src: '/icons/Windows-11.svg' },
+      { alt: 'Linux', src: '/icons/Linux.svg' },
     ],
   },
 ];
