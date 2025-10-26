@@ -1421,53 +1421,93 @@ pre, code, .code, .code-card pre { max-width: 100%; overflow-wrap: anywhere; wor
 
 /* ============== education ============= */
 
+/* ============================
+  Education fixes — mobile-safe overrides
+  (Add this at the end of your global CSS)
+   ============================ */
+
+/* Neutralize the large right margin from older rules on small screens */
+.edu-left {
+  margin-right: 0 !important;
+  max-width: 100% !important;
+  width: 100% !important;
+  padding-inline: 0.5rem;
+  box-sizing: border-box;
+}
+
+/* Ensure edu-card never gets cropped and can grow vertically */
+.edu-card {
+  min-height: auto !important;
+  overflow: visible !important;
+  padding: 14px 18px !important;
+  margin-inline: 0 !important;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Make inner layout responsive — stacked on small screens */
 @media (max-width: 980px) {
-  #education.section {
-    padding-top: 30px;
-    padding-bottom: 30px;
-  }
-
-  #education .exp-headline {
-    gap: 10px;
-    margin-bottom: 28px;
-    margin-right: 100px;
-  }
-
-  #education .exp-title {
-    font-size: 18px;
-    padding: 6px 14px;
-  }
-
-  .edu-left {
-    grid-template-columns: 1fr;
-    gap: 16px;
-    max-width: 92%;
-    margin-inline: auto;
-  }
-
-  .edu-card {
-    width: 100%;
-    margin-inline: auto;
-    padding: 12px 14px;
-  }
-
   .edu-row {
-    grid-template-columns: 1fr;
-    gap: 8px;
+    grid-template-columns: 1fr !important; /* stack vertical */
+    gap: 10px;
+    align-items: start;
   }
 
   .edu-dot {
-    margin: 0 auto;
-    margin-bottom: 6px;
+    margin: 6px auto 0 auto; /* dot centered above the card content */
+    display: block;
   }
 
-  .edu-title {
-    text-align: center;
+  .edu-meta {
+    width: 100%;
+    overflow: visible !important;
+    padding-right: 0 !important;
   }
 
+  /* Title & org centered and wrapped nicely */
+  .edu-title,
   .edu-org,
   .edu-dates {
-    text-align: center;
+    text-align: left; /* left looks better for long text on mobile; change to center if you prefer */
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+
+  /* Reduce top spacing so heading + cards are closer */
+  #education.section, section#education {
+    padding-top: 28px !important;
+    padding-bottom: 28px !important;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  .edu-card {
+    padding: 10px 12px !important;
+    border-radius: 14px;
+  }
+  .edu-title { font-size: 15.5px; }
+  .edu-org { font-size: 13.5px; }
+  .edu-dates { font-size: 12.5px; }
+}
+
+/* Safety: if some other rules set clipping or hidden overflow on ancestors */
+#education, #education .container, .edu-wrap {
+  overflow: visible !important;
+}
+
+/* If a right-floating dot is used via absolute positioning, make sure it fits */
+.edu-card .edu-dot {
+  position: relative !important;
+  right: auto !important;
+  left: auto !important;
+}
+
+/* Optional: keep a little breathing room between cards on mobile */
+@media (max-width: 980px) {
+  .edu-left .edu-card + .edu-card {
+    margin-top: 10px;
   }
 }
 
