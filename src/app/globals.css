@@ -1104,4 +1104,398 @@ textarea.input{ min-height:140px; resize:vertical; }
   .foot-social{ justify-content:flex-start; }
 }
 
+/* ================= Responsive additions — APPEND THIS BLOCK ================= */
+
+/* Global smaller padding */
+@media (max-width: 980px) {
+  section { padding: 72px 14px 36px; } /* lighter vertical padding on mobile/tablet */
+  .container { padding-inline: 12px; max-width: 980px; margin-bottom: 14%; }
+}
+
+/* NAV adjustments so it doesn't overlap */
+@media (max-width: 760px) {
+  .navbar .nav-inner { padding-inline: 12px; }
+  section { padding-top: 86px; } /* leave room for fixed navbar */
+}
+
+/* ---------------- HERO: stack left (intro) above right (code) ---------------- */
+@media (max-width: 980px) {
+  /* target the hero container that used grid-template-columns inline */
+  .container.reveal,
+  .hero .container,
+  .hero-container {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+    align-items: start !important;
+  }
+
+  /* Intro block: center & full width */
+  .container.reveal > div:first-child,
+  .hero .left,
+  .hero-left {
+    order: 1;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    padding-inline: 6px;
+  }
+
+  /* Code-card: below intro, full width and centered */
+  .container.reveal > aside.code-card,
+  .hero .code-card,
+  aside.code-card {
+    order: 2;
+    margin: 0 auto !important;
+    width: 100%;
+    max-width: 560px;
+    padding: 14px;
+    margin-left: 0 !important;
+    min-height: auto;
+  }
+
+  /* Buttons stack vertically and consistent width */
+  .container.reveal .actions,
+  .hero .actions {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    align-items: center;
+  }
+  .container.reveal .actions .btn,
+  .hero .actions .btn { width: min(360px, 100%); justify-content: center; }
+
+  /* Social icons center */
+  .container.reveal .social { justify-content: center; gap: 10px; margin-top: 12px; }
+
+  /* Scale down text a touch */
+  .container.reveal h1 { font-size: clamp(22px, 6vw, 36px); line-height:1.08; }
+  .container.reveal h2 { font-size: clamp(16px, 4.5vw, 22px); }
+  .container.reveal p { font-size: clamp(13px, 3.5vw, 15px); margin-inline: auto; }
+  .role-chip.role-main { font-size: clamp(12px, 3.4vw, 14px); padding: 6px 10px; }
+
+  /* Ensure pre/code wraps and doesn't overflow */
+  .code-card pre, pre.code { white-space: pre-wrap; word-break: break-word; overflow-wrap: anywhere; font-size: 12.5px; }
+}
+
+/* Further small-screen tweaks */
+@media (max-width: 420px) {
+  section { padding: 56px 10px 28px; }
+  .container.reveal .actions .btn { max-width: 100%; padding: 10px 12px; }
+  .container.reveal h1 { font-size: clamp(20px, 8vw, 30px); }
+  .container.reveal > aside.code-card { max-width: 420px; padding: 12px; }
+}
+
+/* ---------------- PROJECTS: stack left/right into one column ---------------- */
+/* --- Mobile: stack project cards and details under each card --- */
+@media (max-width: 980px) {
+  /* make the projects row a single column */
+  .proj-row {
+    grid-template-columns: 1fr !important;
+    gap: 18px;
+  }
+
+  /* ensure the detail box sits below the cards visually */
+  .proj-detail {
+    display: none;            /* hidden by default on mobile */
+    order: 2;                 /* appear after the list */
+    width: 100%;
+    margin: 0;
+    padding: 14px;
+    border-radius: 14px;
+    background: var(--glass);
+    border: 1px solid rgba(255,255,255,.06);
+  }
+
+  /* container that holds cards (right column on desktop) becomes top on mobile */
+  .proj-cards {
+    order: 1;
+    width: 100%;
+    display: grid;
+    gap: 14px;
+  }
+
+  /* clicking will add `.show` to .proj-detail — style that */
+  .proj-detail.show {
+    display: block;
+    animation: slideDown 260ms cubic-bezier(.2,.9,.2,1);
+  }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  /* Make each card easier to tap */
+  .proj-card { padding: 14px; touch-action: manipulation; }
+  .proj-card .thumb { height: 120px; }
+
+  /* optional: hide hover-only hints */
+  .hint, .proj-brief { font-size: 14px; }
+}
+@media (max-width: 980px) {
+  .proj-grid { grid-template-columns: 1fr !important; gap: 14px; }
+  .proj-detail { display: block !important; order: 1; width: 100%; }
+  .proj-cards { order: 2; width: 100%; }
+  .proj-card { padding: 12px; }
+  .proj-card .thumb { height: 120px; }
+  .proj-detail .code { font-size: 13px; white-space: pre-wrap; }
+  .proj-head { grid-template-columns: 1fr auto 1fr; margin-bottom: 36px; }
+  .proj-title { margin-inline: auto; }
+}
+
+/* ---------------- SKILLS: flip-cards responsive row -> smaller cards ---------------- */
+/* ==== Skills: mobile/touch friendly fixes ==== */
+
+/* keep heading visible & layout tight on mobile */
+@media (hover: none), (pointer: coarse) {
+  #skills.section { padding-top: 28px !important; padding-bottom: 36px !important; }
+  .skill-head { margin-bottom: 5% !important; margin-right: 60%;}
+
+  /* make each flip-card a sensible width on small screens */
+  .skills-marquee { overflow: visible; } /* allow vertical/visible flips */
+  .skills-track { animation-play-state: running !important; } /* ensure marquee doesn't unexpectedly pause */
+
+  .flip-card {
+    display: inline-block;
+    width: min(260px, 86vw) !important;
+    margin-inline: 8px;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .flip-card-inner { width:100% !important; transition: transform .6s cubic-bezier(.2,.8,.2,1) !important; }
+
+  /* JS will toggle .is-flipped for touch devices */
+  .flip-card.is-flipped .flip-card-inner { transform: rotateY(180deg) !important; }
+
+  /* keep logos readable */
+  .logo-wrap { gap:10px; grid-template-columns: repeat(auto-fit, minmax(64px, 1fr)); }
+
+  /* make card front/back stack nicely instead of overlapping layout */
+  .flip-card-front.card,
+  .flip-card-back.card { min-height: 200px; }
+}
+
+/* preserve desktop hover behaviour */
+@media (hover: hover) and (pointer: fine) {
+  .flip-card:hover .flip-card-inner { transform: rotateY(180deg); }
+}
+
+/* Prevent marquee from pausing due to :hover touch emulation on mobile */
+@media (hover: none), (pointer: coarse) {
+  .skills-marquee:hover .skills-track { animation-play-state: running !important; pointer-events: auto; }
+}
+
+
+/* tiny screens */
+@media (max-width: 420px) {
+  .skills-row .flip-card { flex-basis: 200px; }
+  .flip-card-inner { height: 200px; width: 200px; }
+  .logo img { width: 24px; height: 24px; }
+}
+
+/* ---------------- CONTACT: single column, tidy spacing ---------------- */
+@media (max-width: 900px) {
+  .contact, .contact-grid, .contact-container { grid-template-columns: 1fr !important; display: grid; gap: 12px; }
+  .contact-card, .contact-aside, .contact-form, .contact-info { width: 100%; margin: 0 auto; padding: 14px; }
+  .contact-form { margin-left: 0; }
+  .input.float, .input { padding: 12px; border-radius: 10px; }
+  .field > label { left: 12px; top: 10px; }
+  .send-btn, .btn { width: 100%; max-width: 420px; }
+  .contact-info li { gap: 10px; }
+}
+
+/* mobile specific */
+@media (max-width: 600px) {
+  .send-btn { width: 100px; font-size: 0.8rem; padding: 8px 10px; }
+  .contact-form { padding: 12px; }
+}
+
+/* ---------------- ABOUT, EXPERIENCE, EDUCATION: stack nicely ---------------- */
+/* --- Strict mobile stacking for About section --- */
+@media (max-width: 980px) {
+  /* Force single column, center everything */
+  .about-plain {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 18px !important;
+    padding-block: 20px !important;
+  }
+
+  /* Label should appear first */
+  .about-label {
+    order: 1 !important;
+    position: static !important;
+    transform: none !important;
+    writing-mode: horizontal-tb !important;
+    margin: 0 auto !important;
+    width: auto !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    opacity: 1 !important;
+  }
+  .about-label span {
+    padding: 8px 18px !important;
+    border-radius: 12px !important;
+    display: inline-block !important;
+    font-weight: 700 !important;
+    box-shadow: none !important;
+  }
+  .about-label span::before,
+  .about-label span::after { display: none !important; }
+
+  /* Then the text/content */
+  .about-content {
+    order: 2 !important;
+    width: 100% !important;
+    max-width: 720px !important;
+    padding-inline: 12px !important;
+    box-sizing: border-box !important;
+  }
+  .about-heading-plain {
+    margin-top: 6px !important;
+    margin-bottom: 8px !important;
+    text-align: center !important;
+    font-size: clamp(18px, 5vw, 22px) !important;
+  }
+  .about-copy {
+    margin: 0 auto 8px auto !important;
+    text-align: center !important;
+    font-size: clamp(14px, 4vw, 16px) !important;
+    line-height: 1.85 !important;
+  }
+
+  /* Image MUST be last */
+  .about-photo {
+    order: 3 !important;
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin-top: 8px !important;
+    padding-inline: 12px !important;
+    box-sizing: border-box !important;
+  }
+  .about-photo img {
+    width: min(360px, 78vw) !important; /* control huge image on small screens */
+    max-width: 100% !important;
+    height: auto !important;
+    border-radius: 16px !important;
+    object-fit: contain !important;
+    box-shadow: 0 14px 40px rgba(0,0,0,.35) !important;
+    margin: 0 auto !important;
+  }
+
+  /* If any child was absolutely positioned, neutralize */
+  .about-plain *[style*="position: absolute"] {
+    position: static !important;
+  }
+
+  /* small tweak: spacing for tiny phones */
+  @media (max-width: 360px) {
+    .about-plain { gap: 12px !important; padding-block: 16px !important; }
+    .about-photo img { width: min(300px, 86vw) !important; }
+  }
+}
+
+/* ---------------- FOOTER adjustments ---------------- */
+@media (max-width: 720px) {
+  .foot-wrap { flex-direction: column; align-items: flex-start; gap: 10px; padding-inline: 12px; }
+  .foot-copy { text-align: left; padding-inline: 8px; }
+  .s-text { display:none; } /* optional: hide text labels to save space */
+}
+
+/* ---------------- Prevent horizontal overflow site-wide ---------------- */
+html, body { overflow-x: hidden; }
+
+/* ensure code / pre / long tags wrap on all viewports */
+pre, code, .code, .code-card pre { max-width: 100%; overflow-wrap: anywhere; word-break: break-word; white-space: pre-wrap; }
+
+/* tiny final polish: slightly reduce big margins for very narrow devices */
+@media (max-width: 360px) {
+  .proj-head { margin-bottom: 26px; gap: 8px; }
+  section { padding: 46px 8px 22px; }
+}
+
+/* ============== education ============= */
+
+@media (max-width: 980px) {
+  #education.section {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+
+  #education .exp-headline {
+    gap: 10px;
+    margin-bottom: 28px;
+    margin-right: 100px;
+  }
+
+  #education .exp-title {
+    font-size: 18px;
+    padding: 6px 14px;
+  }
+
+  .edu-left {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    max-width: 92%;
+    margin-inline: auto;
+  }
+
+  .edu-card {
+    width: 100%;
+    margin-inline: auto;
+    padding: 12px 14px;
+  }
+
+  .edu-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .edu-dot {
+    margin: 0 auto;
+    margin-bottom: 6px;
+  }
+
+  .edu-title {
+    text-align: center;
+  }
+
+  .edu-org,
+  .edu-dates {
+    text-align: center;
+  }
+}
+
+/* Extra small mobile screens */
+@media (max-width: 480px) {
+  #education .exp-title {
+    font-size: 16px;
+  }
+
+  .edu-card {
+    padding: 10px 12px;
+  }
+
+  .edu-title {
+    font-size: 15.5px;
+  }
+
+  .edu-org {
+    font-size: 13.5px;
+  }
+
+  .edu-dates {
+    font-size: 12.5px;
+  }
+
+  .edu-left {
+    gap: 12px;
+  }
+}
+
 

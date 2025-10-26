@@ -1,5 +1,5 @@
-"use client";
-import { useMemo, useState } from "react";
+'use client';
+import { useMemo, useState, useEffect, useRef } from "react";
 
 export default function Projects() {
   const projects = useMemo(
@@ -48,10 +48,63 @@ export default function Projects() {
     []
   );
 
+  // hover state for desktop (existing behaviour)
   const [hoveredId, setHoveredId] = useState(null);
+  // open state for mobile (click/tap)
+  const [openId, setOpenId] = useState(null);
+  // track if we are on mobile width
+  const [isMobile, setIsMobile] = useState(false);
+  const rootRef = useRef(null);
+
+  // media query watcher for mobile
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const mq = window.matchMedia('(max-width: 980px)');
+    const handler = (e) => setIsMobile(e.matches);
+    setIsMobile(mq.matches);
+    if (mq.addEventListener) mq.addEventListener('change', handler);
+    else mq.addListener(handler);
+    return () => {
+      if (mq.removeEventListener) mq.removeEventListener('change', handler);
+      else mq.removeListener(handler);
+    };
+  }, []);
+
+  // close open detail when clicking outside (mobile only)
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    function onDocClick(e) {
+      if (!isMobile) return; // only for mobile behaviour
+      if (!rootRef.current) return;
+      if (!rootRef.current.contains(e.target)) {
+        setOpenId(null);
+      }
+    }
+    document.addEventListener('click', onDocClick);
+    return () => document.removeEventListener('click', onDocClick);
+  }, [isMobile]);
+
+  // toggle on click (mobile). Keep desktop hover untouched.
+  function handleCardClick(pId) {
+    if (!isMobile) return;
+    setOpenId((prev) => (prev === pId ? null : pId));
+    // Also clear hoveredId so hover UI doesn't conflict on some browsers
+    setHoveredId(null);
+    // scroll the detail into view briefly after state update
+    setTimeout(() => {
+      const detail = document.querySelector(`.proj-detail[data-id="${pId}"]`);
+      if (detail) {
+        // adjust offset for fixed navbar if any (tweak -80 if needed)
+        const yOffset = -80;
+        const rect = detail.getBoundingClientRect();
+        const y = window.scrollY + rect.top + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    }, 80);
+  }
 
   return (
-    <section id="projects" className="section projects-master">
+    <section id="projects" className="section projects-master" ref={rootRef}>
       <div className="container">
         {/* Section Heading */}
         <div className="proj-head">
@@ -64,38 +117,49 @@ export default function Projects() {
 
         {/* EACH ROW */}
         <div className="proj-list">
-          {projects.map((p, i) => (
-            <div
-              className="proj-row"
-              key={p.id}
-              onMouseEnter={() => setHoveredId(p.id)}
-              onMouseLeave={() => setHoveredId(null)}
-              style={{ transitionDelay: `${i * 70}ms` }}
-            >
-              {/* LEFT CARD */}
-              <div className="proj-card card">
-                <div className="thumb">
-                  <span className="thumb-title">{p.name}</span>
+          {projects.map((p, i) => {
+            const showDetail = hoveredId === p.id || openId === p.id;
+            return (
+              <div
+                className="proj-row"
+                key={p.id}
+                onMouseEnter={() => { if (!isMobile) setHoveredId(p.id); }}
+                onMouseLeave={() => { if (!isMobile) setHoveredId(null); }}
+                style={{ transitionDelay: `${i * 70}ms` }}
+              >
+                {/* LEFT CARD */}
+                <div
+                  className={`proj-card card ${openId === p.id ? 'active' : ''}`}
+                  data-id={p.id}
+                  onClick={() => handleCardClick(p.id)}
+                  role={isMobile ? "button" : undefined}
+                  tabIndex={isMobile ? 0 : undefined}
+                >
+                  <div className="thumb">
+                    <span className="thumb-title">{p.name}</span>
+                  </div>
+                  <div className="pc-top">
+                    <strong className="pc-name">{p.name}</strong>
+                    <span className="pc-period">{p.period}</span>
+                  </div>
+                  <p className="pc-brief">{p.brief}</p>
+                  <div className="pc-tags">
+                    {p.stack.slice(0, 3).map((t) => (
+                      <span className="tag" key={t}>
+                        {t}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-                <div className="pc-top">
-                  <strong className="pc-name">{p.name}</strong>
-                  <span className="pc-period">{p.period}</span>
-                </div>
-                <p className="pc-brief">{p.brief}</p>
-                <div className="pc-tags">
-                  {p.stack.slice(0, 3).map((t) => (
-                    <span className="tag" key={t}>
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </div>
 
-              {/* RIGHT DETAIL */}
-              <div className={`proj-detail card ${hoveredId === p.id ? "show" : ""}`}>
-                {hoveredId === p.id ? (
-                  <>
-                    <pre className="code">
+                {/* RIGHT DETAIL */}
+                <div
+                  className={`proj-detail card ${showDetail ? "show" : ""}`}
+                  data-id={p.id}
+                >
+                  {showDetail ? (
+                    <>
+                      <pre className="code">
 {`const project = {
   name: '${p.name}',
   period: '${p.period}',
@@ -103,46 +167,47 @@ export default function Projects() {
   stack: ${JSON.stringify(p.stack)},
   highlights: ${JSON.stringify(p.impact, null, 0)}
 };`}
-                    </pre>
+                      </pre>
 
-                    <div className="detail-meta">
-                      <div className="chips">
-                        {p.stack.map((s) => (
-                          <span className="chip" key={s}>
-                            {s}
-                          </span>
-                        ))}
+                      <div className="detail-meta">
+                        <div className="chips">
+                          {p.stack.map((s) => (
+                            <span className="chip" key={s}>
+                              {s}
+                            </span>
+                          ))}
+                        </div>
+                        <div className="links">
+                          {p.links.live && (
+                            <a
+                              className="btn ghost"
+                              href={p.links.live}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              Live ↗
+                            </a>
+                          )}
+                          {p.links.repo && (
+                            <a
+                              className="btn ghost"
+                              href={p.links.repo}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              Repo ↗
+                            </a>
+                          )}
+                        </div>
                       </div>
-                      <div className="links">
-                        {p.links.live && (
-                          <a
-                            className="btn ghost"
-                            href={p.links.live}
-                            target="_blank"
-                            rel="noreferrer"
-                          >
-                            Live ↗
-                          </a>
-                        )}
-                        {p.links.repo && (
-                          <a
-                            className="btn ghost"
-                            href={p.links.repo}
-                            target="_blank"
-                            rel="noreferrer"
-                          >
-                            Repo ↗
-                          </a>
-                        )}
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <p className="text-gray-500">Hover this card to see →</p>
-                )}
+                    </>
+                  ) : (
+                    <p className="text-gray-500">Hover this card to see →</p>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

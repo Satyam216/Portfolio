@@ -1,7 +1,8 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const DOMAINS = [
+  /* ... (उतना ही data जैसा तूने दिया) ... */
   {
     key: 'programming',
     title: 'Programming Languages',
@@ -77,6 +78,44 @@ const DOMAINS = [
 ];
 
 export default function Skills() {
+  useEffect(() => {
+    // only enable touch flip on touch-capable devices
+    const isTouch = typeof window !== 'undefined' && (('ontouchstart' in window) || navigator.maxTouchPoints > 0);
+    if (!isTouch) return;
+
+    // delegate click: toggle .is-flipped on closest .flip-card
+    function onDocClick(e) {
+      // if clicked outside any flip-card -> remove all flips
+      if (!e.target.closest || !document.querySelector) return;
+      const clickedCard = e.target.closest('.flip-card');
+
+      if (!clickedCard) {
+        // click outside cards -> unflip all
+        document.querySelectorAll('.flip-card.is-flipped').forEach(c => c.classList.remove('is-flipped'));
+        return;
+      }
+
+      // if clicked an interactive element inside a card (link/button), let it work but don't toggle flip
+      const interactive = e.target.closest('a, button, input, textarea, select, label');
+      if (interactive) {
+        return; // let link/button do its job
+      }
+
+      // toggle flip on the tapped card
+      clickedCard.classList.toggle('is-flipped');
+
+      // stop propagation so outside handler doesn't immediately unflip
+      e.stopPropagation();
+    }
+
+    // attach single delegated listener
+    document.addEventListener('click', onDocClick, { passive: false });
+
+    return () => {
+      document.removeEventListener('click', onDocClick);
+    };
+  }, []);
+
   return (
     <section id="skills" className="section">
       <div className="container">
@@ -86,58 +125,72 @@ export default function Skills() {
           <span className="proj-line" />
         </div>
 
-            <div className="skills-marquee">
-              <div className="skills-track">
-                {/* Track A */}
-                {DOMAINS.map((d, i) => (
-                  <div key={`A-${d.key}`} className="flip-card reveal show" style={{ transitionDelay: `${i * 50}ms` }}>
-                    <div className="flip-card-inner">
-                      <div className="flip-card-front card">
-                        <div className="flip-front-body">
-                          <h3 className="flip-title">{d.title}</h3>
-                          <p className="flip-sub">Hover to view tech</p>
-                        </div>
-                      </div>
-                      <div className="flip-card-back card">
-                        <div className="logo-wrap">
-                          {d.icons.map(icon => (
-                            <div className="logo" key={icon.alt} title={icon.alt} aria-label={icon.alt}>
-                              <img src={icon.src} alt={icon.alt} loading="lazy" />
-                              <span>{icon.alt}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
+        <div className="skills-marquee" aria-hidden="false">
+          <div className="skills-track" aria-live="polite">
+            {/* Track A */}
+            {DOMAINS.map((d, i) => (
+              <div
+                key={`A-${d.key}`}
+                className="flip-card reveal show"
+                style={{ transitionDelay: `${i * 50}ms` }}
+                role="button"
+                tabIndex={0}
+                aria-pressed="false"
+                onKeyDown={(e) => {
+                  // allow keyboard toggle for accessibility (Enter/Space)
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.currentTarget.classList.toggle('is-flipped');
+                    e.preventDefault();
+                  }
+                }}
+              >
+                <div className="flip-card-inner">
+                  <div className="flip-card-front card">
+                    <div className="flip-front-body">
+                      <h3 className="flip-title">{d.title}</h3>
+                      <p className="flip-sub">Hover to view tech</p>
                     </div>
                   </div>
-                ))}
-                {/* Track B (duplicate for seamless loop) */}
-                {DOMAINS.map((d) => (
-                  <div key={`B-${d.key}`} className="flip-card">
-                    <div className="flip-card-inner">
-                      <div className="flip-card-front card">
-                        <div className="flip-front-body">
-                          <h3 className="flip-title">{d.title}</h3>
-                          <p className="flip-sub">Hover to view tech</p>
+                  <div className="flip-card-back card">
+                    <div className="logo-wrap">
+                      {d.icons.map(icon => (
+                        <div className="logo" key={icon.alt} title={icon.alt} aria-label={icon.alt}>
+                          <img src={icon.src} alt={icon.alt} loading="lazy" />
+                          <span>{icon.alt}</span>
                         </div>
-                      </div>
-                      <div className="flip-card-back card">
-                        <div className="logo-wrap">
-                          {d.icons.map(icon => (
-                            <div className="logo" key={icon.alt + '-b'} title={icon.alt} aria-label={icon.alt}>
-                              <img src={icon.src} alt={icon.alt} loading="lazy" />
-                              <span>{icon.alt}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
+                      ))}
                     </div>
                   </div>
-                ))}
+                </div>
               </div>
-            </div>
+            ))}
 
+            {/* Track B duplicate for smooth loop */}
+            {DOMAINS.map((d, i) => (
+              <div key={`B-${d.key}`} className="flip-card" aria-hidden="true">
+                <div className="flip-card-inner">
+                  <div className="flip-card-front card">
+                    <div className="flip-front-body">
+                      <h3 className="flip-title">{d.title}</h3>
+                      <p className="flip-sub">Hover to view tech</p>
+                    </div>
+                  </div>
+                  <div className="flip-card-back card">
+                    <div className="logo-wrap">
+                      {d.icons.map(icon => (
+                        <div className="logo" key={icon.alt + '-b'} title={icon.alt} aria-label={icon.alt}>
+                          <img src={icon.src} alt={icon.alt} loading="lazy" />
+                          <span>{icon.alt}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
 
+          </div>
+        </div>
       </div>
     </section>
   );
