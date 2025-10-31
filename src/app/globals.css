@@ -986,6 +986,7 @@ textarea.input{ min-height:140px; resize:vertical; }
   align-items: center;
   gap: 16px;
   margin-bottom: 60px;
+  margin-left: 50px;
   text-align: center;
 }
 
@@ -1250,7 +1251,7 @@ textarea.input{ min-height:140px; resize:vertical; }
 /* keep heading visible & layout tight on mobile */
 @media (hover: none), (pointer: coarse) {
   #skills.section { padding-top: 28px !important; padding-bottom: 36px !important; }
-  .skill-head { margin-bottom: 5% !important; margin-right: 60%;}
+  .skill-head { margin-bottom: 5% !important; margin-right: 66%;}
 
   /* make each flip-card a sensible width on small screens */
   .skills-marquee { overflow: visible; } /* allow vertical/visible flips */
@@ -1419,123 +1420,251 @@ pre, code, .code, .code-card pre { max-width: 100%; overflow-wrap: anywhere; wor
   section { padding: 46px 8px 22px; }
 }
 
-/* ============== education ============= */
+/* ========================== */
+/* Education — stronger mobile fixes (paste at end) */
+/* ========================== */
 
-/* ============================
-  Education fixes — mobile-safe overrides
-  (Add this at the end of your global CSS)
-   ============================ */
-
-/* Neutralize the large right margin from older rules on small screens */
-.edu-left {
-  margin-right: 0 !important;
-  max-width: 100% !important;
-  width: 100% !important;
-  padding-inline: 0.5rem;
-  box-sizing: border-box;
-}
-
-/* Ensure edu-card never gets cropped and can grow vertically */
-.edu-card {
-  min-height: auto !important;
+section#education,
+#education.section,
+#education .container,
+.edu-wrap {
+  /* make sure no ancestor clips content */
   overflow: visible !important;
-  padding: 14px 18px !important;
-  margin-inline: 0 !important;
-  width: 100%;
-  box-sizing: border-box;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
 }
 
-/* Make inner layout responsive — stacked on small screens */
+/* reduce huge top padding for small screens but keep desktop intact */
 @media (max-width: 980px) {
-  .edu-row {
-    grid-template-columns: 1fr !important; /* stack vertical */
-    gap: 10px;
-    align-items: start;
-  }
-
-  .edu-dot {
-    margin: 6px auto 0 auto; /* dot centered above the card content */
-    display: block;
-  }
-
-  .edu-meta {
-    width: 100%;
-    overflow: visible !important;
-    padding-right: 0 !important;
-  }
-
-  /* Title & org centered and wrapped nicely */
-  .edu-title,
-  .edu-org,
-  .edu-dates {
-    text-align: left; /* left looks better for long text on mobile; change to center if you prefer */
-    white-space: normal;
-    word-break: break-word;
-    overflow-wrap: anywhere;
-  }
-
-  /* Reduce top spacing so heading + cards are closer */
-  #education.section, section#education {
-    padding-top: 28px !important;
+  section#education, #education.section {
+    padding-top: 36px !important;
     padding-bottom: 28px !important;
   }
-}
 
-/* Extra small screens */
-@media (max-width: 480px) {
-  .edu-card {
-    padding: 10px 12px !important;
-    border-radius: 14px;
+  /* headline spacing smaller so cards come up nearer heading */
+  .exp-headline {
+    margin-bottom: 28px !important;
+    margin-right: 58% !important;
+    gap: 18px !important;
   }
-  .edu-title { font-size: 15.5px; }
-  .edu-org { font-size: 13.5px; }
-  .edu-dates { font-size: 12.5px; }
 }
 
-/* Safety: if some other rules set clipping or hidden overflow on ancestors */
-#education, #education .container, .edu-wrap {
+
+/* Ensure left column uses full width on small screens */
+.edu-left {
+  margin-right: 0 !important;
+  width:50% !important;
+  max-width: 100% !important;
+  padding-inline: 8px !important;
+  gap: 12px !important;
+  box-sizing: border-box !important;
+}
+
+/* Make each card full width and never clipped */
+.edu-card {
+  width: 100% !important;
+  min-height: auto !important;
   overflow: visible !important;
+  padding: 14px 16px !important;
+  margin: 0 !important;
+  margin-bottom: 12px !important;
+  border-radius: 14px !important;
+  position: relative !important;
+  z-index: 0 !important;
+  box-sizing: border-box !important;
 }
 
-/* If a right-floating dot is used via absolute positioning, make sure it fits */
-.edu-card .edu-dot {
+/* Default row layout (desktop & tablet) */
+.edu-row {
+  display: grid !important;
+  grid-template-columns: auto 1fr !important;
+  gap: 12px !important;
+  align-items: start !important;
+}
+
+/* Dot visible and not absolutely positioned */
+.edu-dot {
+  width: 12px !important;
+  height: 12px !important;
+  border-radius: 999px !important;
+  margin-top: 6px !important;
+  box-shadow: 0 0 12px rgba(98,208,255,.8) !important;
+  flex: 0 0 auto !important;
   position: relative !important;
   right: auto !important;
   left: auto !important;
 }
 
-/* Optional: keep a little breathing room between cards on mobile */
+/* Make sure meta text wraps and doesn't overflow horizontally */
+.edu-meta,
+.edu-title,
+.edu-org,
+.edu-dates,
+.edu-note {
+  white-space: normal !important;
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
+  text-overflow: clip !important;
+  text-align: left !important;
+}
+
+/* On smaller widths switch to stacked layout (dot above content) */
+@media (max-width: 640px) {
+  .edu-row {
+    grid-template-columns: 1fr !important; /* stack */
+    gap: 8px !important;
+  }
+
+  .edu-dot {
+    display: block !important;
+    margin: 6px 0 6px 6px !important; /* small left offset */
+    justify-self: start !important;
+  }
+
+  .edu-meta { padding-right: 0 !important; }
+
+  /* slightly reduce font sizes for tight screens */
+  .edu-title { font-size: 15.5px !important; line-height: 1.25 !important; }
+  .edu-org { font-size: 13.5px !important; }
+  .edu-dates { font-size: 12.5px !important; color: var(--muted) !important; }
+
+  /* ensure cards have breathing room */
+  .edu-left .edu-card + .edu-card { margin-top: 10px !important; }
+}
+
+/* Extra small screens: preserve readability */
+@media (max-width: 420px) {
+  .edu-card { padding: 10px 12px !important; border-radius: 12px !important; }
+  .edu-left { padding-inline: 10px !important; gap: 10px !important; }
+  .edu-title { font-size: 15px !important; }
+  .edu-org { font-size: 13px !important; }
+}
+
+/* Safety: if some other rules set clip on ancestors */
+#education, #education .container, .edu-wrap {
+  overflow: visible !important;
+}
+
+/* Ensure the top-most highlighted card (if you used z-index on something) doesn't overlap header */
+#education .edu-card { z-index: 0 !important; }
+
+
+/* ============================
+  Experience responsive overrides
+  (Paste at the end of your global CSS)
+   ============================ */
+
+/* Make sure container doesn't clip content on small viewports */
+#experience, #experience .container, #experience section {
+  overflow: visible !important;
+  box-sizing: border-box;
+}
+
+/* Default safe adjustments (non-destructive for desktop) */
+.exp-layout { gap: 24px; }
+
+/* Mobile / tablet: stack layout, center image, make cards full width */
 @media (max-width: 980px) {
-  .edu-left .edu-card + .edu-card {
-    margin-top: 10px;
-  }
-}
-
-/* Extra small mobile screens */
-@media (max-width: 480px) {
-  #education .exp-title {
-    font-size: 16px;
+  /* stack left cards above the right image */
+  .exp-layout {
+    grid-template-columns: 1fr !important;
+    gap: 18px !important;
+    align-items: start;
   }
 
-  .edu-card {
-    padding: 10px 12px;
+  /* left column take full width and remove horizontal pushes */
+  .exp-left {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding-inline: 8px;
+    box-sizing: border-box;
+    gap: 14px;
   }
 
-  .edu-title {
-    font-size: 15.5px;
+  /* each experience card becomes full width, removes fixed paddings causing overflow */
+  .exp-card {
+    width: 100% !important;
+    padding: 14px !important;
+    margin: 0 !important;
+    min-height: auto !important;
+    overflow: visible !important;
+    border-radius: 14px;
   }
 
-  .edu-org {
-    font-size: 13.5px;
-  }
-
-  .edu-dates {
-    font-size: 12.5px;
-  }
-
-  .edu-left {
+  /* inside the card: make row stack (dot on top or left) */
+  .exp-card-row, .exp-row {
+    grid-template-columns: auto 1fr;
     gap: 12px;
+    align-items: start;
+  }
+
+  /* ensure the icon/dot sits nicely (not overflowing) */
+  .exp-icon, .exp-dot {
+    width: 34px !important;
+    height: 34px !important;
+    margin-top: 6px;
+    display: grid;
+    place-items: center;
+  }
+
+  /* text flows and wraps properly */
+  .exp-top, .exp-role, .exp-org, .exp-note {
+    white-space: normal !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+    text-align: left !important;
+  }
+
+  /* reduce big margins above the section so heading sits closer */
+  #experience.section, section#experience {
+    padding-top: 36px !important;
+    padding-bottom: 36px !important;
+  }
+
+  /* center the right-side image/video below cards */
+  .exp-right {
+    justify-content: center !important;
+    width: 100% !important;
+    margin-top: 6px;
+  }
+
+  .exp-video {
+    width: clamp(300px, 86vw, 520px) !important;
+    max-width: 100% !important;
+    height: auto !important;
+    margin: 0 auto !important;
+    display: block !important;
   }
 }
+
+/* Extra small screens: tighten paddings and font sizes */
+@media (max-width: 480px) {
+  .exp-left { padding-inline: 10px; }
+  .exp-card { padding: 10px 12px !important; border-radius: 12px; }
+  .exp-role { font-size: 16px !important; }
+  .exp-top { font-size: 12.5px !important; }
+  .exp-note { font-size: 13px !important; }
+  .exp-video { width: clamp(240px, 90vw, 420px) !important; }
+}
+
+/* If any ancestor had fixed height/overflow hidden, make it flexible */
+#experience .container, #experience .exp-layout, .exp-wrap {
+  overflow: visible !important;
+  max-width: 100% !important;
+  box-sizing: border-box;
+}
+
+/* Small tweak: keep hover lift but avoid shift on small screens */
+@media (max-width: 980px) {
+  .exp-card:hover { transform: none !important; box-shadow: 0 8px 28px rgba(0,0,0,0.35) !important; }
+}
+
+/* Optional: give breathing room between stacked cards on mobile */
+@media (max-width: 980px) {
+  .exp-left .exp-card + .exp-card { margin-top: 12px !important; }
+}
+
+
 
 

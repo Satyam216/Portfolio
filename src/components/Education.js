@@ -31,15 +31,12 @@ export default function Education() {
 
   return (
     <section id="education" className="section edu-section">
-      <div className="container">
-        
-        <div className="exp-headline">
+       <div className="exp-headline">
           <span className="exp-hr" />
           <h2 className="exp-title">Education</h2>
           <span className="exp-hr" />
         </div>
-      
-
+      <div className="container">
         {/* Timeline cards */}
         <div className="edu-wrap">
           <div className="edu-left">
