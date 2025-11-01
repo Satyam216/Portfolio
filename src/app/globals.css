@@ -1121,72 +1121,132 @@ textarea.input{ min-height:140px; resize:vertical; }
   section { padding-top: 86px; } /* leave room for fixed navbar */
 }
 
-/* ---------------- HERO: stack left (intro) above right (code) ---------------- */
+/* ---------------- HERO: Responsive Improved ---------------- */
 @media (max-width: 980px) {
-  /* target the hero container that used grid-template-columns inline */
-  .container.reveal,
-  .hero .container,
-  .hero-container {
+  .hero, .hero .container, .hero-container {
     display: grid !important;
     grid-template-columns: 1fr !important;
     gap: 28px !important;
     align-items: start !important;
+    text-align: center;
   }
 
-  /* Intro block: center & full width */
-  .container.reveal > div:first-child,
-  .hero .left,
-  .hero-left {
+  .hero .left, .hero-left {
     order: 1;
     width: 100%;
     margin: 0 auto;
     text-align: center;
-    padding-inline: 6px;
+    padding-inline: 12px;
   }
 
-  /* Code-card: below intro, full width and centered */
-  .container.reveal > aside.code-card,
-  .hero .code-card,
-  aside.code-card {
+  .hero .code-card, aside.code-card {
     order: 2;
     margin: 0 auto !important;
     width: 100%;
-    max-width: 560px;
+    max-width: 540px;
     padding: 14px;
-    margin-left: 0 !important;
     min-height: auto;
   }
 
-  /* Buttons stack vertically and consistent width */
-  .container.reveal .actions,
-  .hero .actions {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 12px !important;
-    align-items: center;
+  .hero h1 {
+    font-size: clamp(24px, 7vw, 40px);
+    line-height: 1.5;
+    word-break: break-word;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    margin-bottom: 6px;
   }
-  .container.reveal .actions .btn,
-  .hero .actions .btn { width: min(360px, 100%); justify-content: center; }
 
-  /* Social icons center */
-  .container.reveal .social { justify-content: center; gap: 10px; margin-top: 12px; }
+  .hero h2 {
+    font-size: clamp(18px, 5vw, 24px);
+    margin-bottom: 10px;
+  }
 
-  /* Scale down text a touch */
-  .container.reveal h1 { font-size: clamp(22px, 6vw, 36px); line-height:1.08; }
-  .container.reveal h2 { font-size: clamp(16px, 4.5vw, 22px); }
-  .container.reveal p { font-size: clamp(13px, 3.5vw, 15px); margin-inline: auto; }
-  .role-chip.role-main { font-size: clamp(12px, 3.4vw, 14px); padding: 6px 10px; }
+  .hero p {
+    font-size: clamp(13px, 3.5vw, 15px);
+    max-width: 95%;
+    margin-inline: auto;
+  }
 
-  /* Ensure pre/code wraps and doesn't overflow */
-  .code-card pre, pre.code { white-space: pre-wrap; word-break: break-word; overflow-wrap: anywhere; font-size: 12.5px; }
+  .hero .actions {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .hero .actions .btn {
+    width: min(340px, 90%);
+    justify-content: center;
+  }
+
+  /* Modern Hamburger Icon */
+.burger {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 34px;
+  height: 28px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 5px;
+  transition: all 0.3s ease;
 }
 
-/* Further small-screen tweaks */
+.burger span {
+  width: 22px;
+  height: 2px;
+  background: #d6ebff;
+  border-radius: 999px;
+  transition: all 0.3s ease;
+}
+
+/* Hover effect (slight glow + expand) */
+.burger:hover {
+  background: rgba(98,208,255,0.1);
+  box-shadow: 0 0 8px rgba(98,208,255,0.25);
+  transform: translateY(-1px);
+}
+.burger:hover span {
+  background: #62d0ff;
+}
+
+/* When navbar is open — animated X shape */
+.nav.open .burger span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.nav.open .burger span:nth-child(2) {
+  opacity: 0;
+}
+.nav.open .burger span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+
+  /* Ensure code-card text wraps */
+  .code-card pre, pre.code {
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    font-size: 12.5px;
+  }
+
+  /* Slight top padding fix for mobile */
+  section.hero {
+    padding-top: 80px !important;
+    padding-bottom: 40px !important;
+  }
+}
+
+/* For extra small screens */
 @media (max-width: 420px) {
-  section { padding: 56px 10px 28px; }
-  .container.reveal .actions .btn { max-width: 100%; padding: 10px 12px; }
-  .container.reveal h1 { font-size: clamp(20px, 8vw, 30px); }
-  .container.reveal > aside.code-card { max-width: 420px; padding: 12px; }
+  .hero h1 { font-size: clamp(20px, 8vw, 30px); }
+  .hero h2 { font-size: 16px; }
+  .hero p { font-size: 13px; }
+  .hero .actions .btn { padding: 10px 12px; }
 }
 
 /* ---------------- PROJECTS: stack left/right into one column ---------------- */
