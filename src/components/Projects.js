@@ -5,6 +5,84 @@ export default function Projects() {
   const projects = useMemo(
     () => [
       {
+        id: "Speech-To-Text-Flow",
+        name: "Speech-to-Text Conversion",
+        period: "Oct 2025 — Present",
+        role: "Full Stack Developer",
+        brief: "A modern web app that records or accepts audio uploads and converts speech to editable text in near real-time using Deepgram.",
+        stack: [
+          "React",
+          "Vite",
+          "Tailwind CSS",
+          "Lucide-react (icons)",
+          "Node.js",
+          "Express",
+          "Multrer (file upload)",
+          "Supabase Storage & Postgres",
+          "Deepgram HTTP API",
+          "JWT",
+          "Render / Vercel"
+        ],
+        impact: [
+          "Real-time speech capture and visual waveform while recording.",
+          "Server-side transcription using Deepgram (high accuracy) and storing transcripts in DB.",
+          "Secure authentication with JWT; all uploads validated server-side."
+        ],
+        links: {
+          live: "https://speechtotext-instantconvert.vercel.app/dashboard",
+          repo: "https://github.com/Satyam216/speech-to-text-frontend"
+        }
+      },
+
+      {
+        id: "Notes-Taking-App",
+        note: "Warning : Live demo hosted on Vercel. Live link will not work if the Supabase database is paused (free-tier limitation).",
+        name: "Notes-Taking-App",
+        period: "Sep 2025 — Oct 2025",
+        role: "Full Stack Developer",
+        brief: "A responsive full-stack note-taking web app with passwordless email OTP and Google authentication (Supabase), JWT-protected backend APIs, and PostgreSQL (Supabase) storage for notes and user profiles.",
+        stack: ["React","Vite", "Supabase (Auth+Postgres+Storage)", "TypeScript", "Tailwind CSS", "React Router", , "Node.js","Express","JWT","Vercel"],
+        impact: [
+        "Passwordless email OTP + Google OAuth for frictionless sign-in",
+        "Secure notes CRUD with JWT authorization on backend",
+        ],
+        links: {live: "https://notestaking-app-satyam21.vercel.app/",repo: "https://github.com/Satyam216/notes-taking-app"},
+        },
+
+        {
+          id: "Store-Rating-Platform",
+          note: "Warning: Live demo may not work if backend or database server is paused (free-tier limitation).",
+          name: "Store-Rating-Platform",
+          period: "Aug 2025 — Oct 2025",
+          role: "Full Stack Developer",
+          brief: "A role-based full-stack web application where users can rate and review stores. Features secure JWT authentication, role-specific dashboards, and MySQL database integration.",
+          stack: ["React", "React Router", "Node.js", "Express", "MySQL", "Sequelize ORM", "JWT", "CSS", "Vercel", "Railway", "Render"],
+          impact: [
+            "Implemented role-based access control for Admin, Store Owner, and Normal User",
+            "Developed secure authentication and password update functionality using JWT",
+            "Enabled users to rate, edit, and view store ratings with search and filter options",
+          ],
+          links: {
+            live: "https://store-rating-platform-first.vercel.app/",
+            repo: "https://github.com/Satyam216/store-rating-platform",
+          },
+        },
+
+      {
+        id: "Visuals-Product-Matcher",
+        name: "Visuals-Product-Matcher",
+        period: "Sep 2025 — Oct 2025",
+        role: "Full Stack Developer",
+        brief: "An AI-powered web app that finds visually similar products using deep learning and cloud image storage.",
+        stack: ["React", "Vite", "Tailwind Css","Farmer Motion","TensorFlow", "Fast API", "Numpy", "Scikit-learn", "Bcrypt", "JWT", "MongoDB Atlas", "Cloudinary"],
+        impact: [
+          "AI-based similarity detection (MobileNetV2 + TensorFlow) ",
+          "Cloud image hosting via Cloudinary",
+          " Adjustable similarity filter(slider / manual input) ",
+        ],
+        links: { live: "https://visuals-product-matcher.vercel.app/", repo: "https://github.com/Satyam216/visuals-product-matcher" },
+      },
+      {
         id: "todo-collab",
         name: "ToDo-Collab",
         period: "Feb 2025 — Mar 2025",
@@ -16,7 +94,7 @@ export default function Projects() {
           "Optimized queries; supported 100+ concurrent users.",
           "25% perf improvement via state & query tuning.",
         ],
-        links: { live: "https://todo-collab.vercel.app", repo: "" },
+        links: { live: "https://todo-collab.vercel.app", repo: "https://github.com/Satyam216/todo-collab" },
       },
       {
         id: "cityshop",
@@ -29,7 +107,7 @@ export default function Projects() {
           "Secure auth and backend API integration.",
           "Instant listings and payments for local stores.",
         ],
-        links: { live: "", repo: "" },
+        links: { live: "", repo: "https://github.com/Satyam216/cityshop" },
       },
       {
         id: "pg-life",
@@ -42,7 +120,7 @@ export default function Projects() {
           "Advanced filters and responsive UI.",
           "Secure sessions & authentication.",
         ],
-        links: { live: "", repo: "" },
+        links: { live: "", repo: "https://github.com/Satyam216/pg-life" },
       },
     ],
     []
@@ -138,13 +216,16 @@ export default function Projects() {
                   <div className="thumb">
                     <span className="thumb-title">{p.name}</span>
                   </div>
+                  <div className="hint">
+                    <span style={{fontSize:'12px', color:'pink'}}>{p.note}</span>
+                  </div>
                   <div className="pc-top">
                     <strong className="pc-name">{p.name}</strong>
                     <span className="pc-period">{p.period}</span>
                   </div>
                   <p className="pc-brief">{p.brief}</p>
                   <div className="pc-tags">
-                    {p.stack.slice(0, 3).map((t) => (
+                    {p.stack.slice(0, 5).map((t) => (
                       <span className="tag" key={t}>
                         {t}
                       </span>
@@ -160,13 +241,13 @@ export default function Projects() {
                   {showDetail ? (
                     <>
                       <pre className="code">
-{`const project = {
-  name: '${p.name}',
-  period: '${p.period}',
-  role: '${p.role}',
-  stack: ${JSON.stringify(p.stack)},
-  highlights: ${JSON.stringify(p.impact, null, 0)}
-};`}
+  {`const project = {
+          name: '${p.name}',
+          period: '${p.period}',
+          role: '${p.role}',
+          stack: ${JSON.stringify(p.stack)},
+          highlights: ${JSON.stringify(p.impact, null, 0)}
+  };`}
                       </pre>
 
                       <div className="detail-meta">
@@ -194,6 +275,7 @@ export default function Projects() {
                               href={p.links.repo}
                               target="_blank"
                               rel="noreferrer"
+                              style={{marginLeft: '10px'}}
                             >
                               Repo ↗
                             </a>
@@ -202,7 +284,7 @@ export default function Projects() {
                       </div>
                     </>
                   ) : (
-                    <p className="text-gray-500">Hover this card to see →</p>
+                    <p className="text-gray-500">Click on the project card to see detail →</p>
                   )}
                 </div>
               </div>

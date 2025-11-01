@@ -437,6 +437,7 @@ textarea.input{ min-height:140px; resize:vertical; }
   background: var(--glass);
   min-height: 280px;
 }
+
 .proj-detail.show {
   display: block;
 }
@@ -444,7 +445,7 @@ textarea.input{ min-height:140px; resize:vertical; }
   color: #cfe8ff;
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 13.5px;
-  line-height: 1.7;
+  line-height: 2.0;
   white-space: pre-wrap;
 }
 .detail-meta {
@@ -461,7 +462,7 @@ textarea.input{ min-height:140px; resize:vertical; }
 }
 .chip {
   font-size: 12px;
-  padding: 6px 10px;
+  padding: 4px 10px;
   border-radius: 999px;
   color: #ffe8ff;
   background: linear-gradient(
@@ -471,6 +472,7 @@ textarea.input{ min-height:140px; resize:vertical; }
   );
   border: 1px solid rgba(255, 255, 255, 0.12);
   backdrop-filter: blur(6px);
+  margin-bottom: 5px;
 }
 
 /* Right Cards */
